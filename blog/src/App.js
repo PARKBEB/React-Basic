@@ -8,6 +8,7 @@ function App() {
   // 자동으로 html이 재렌더링됨
   let [글제목, 글제목변경] = useState(['남성 코트 추천', '강남 우동 맛집', '파이썬 독학']);
   let [좋아요, 좋아요변경] = useState(0);
+  let [modal, setModal] = useState(false);
 
   return (
     <div className="App">
@@ -37,10 +38,14 @@ function App() {
         <p>2월 17일 발행</p>
       </div>
       <div className="list">
-        <h4>{ 글제목[2] }</h4>
+        <h4 onClick={ () => { setModal(modal == true ? false : true) }}>{ 글제목[2] }</h4>
         <p>2월 17일 발행</p>
       </div>
-      <Modal/>
+      
+      {
+        modal == true ? <Modal/> : null
+      }
+
     </div>
   );
 }
@@ -50,7 +55,7 @@ function App() {
 // 단점 1. state를 가져와 쓸 때
 function Modal() { 
   return (
-    <div className='modal'>
+    <div className="modal">
       <h4>제목</h4>
       <p>날짜</p>
       <p>상세내용</p>
