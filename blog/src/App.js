@@ -40,7 +40,22 @@ function App() {
         <h4>{ 글제목[2] }</h4>
         <p>2월 17일 발행</p>
       </div>
+      <Modal/>
     </div>
   );
 }
+
+// div Component
+// 장점 1. 반복적인 html 축약할 때 2. 큰 페이지 3. 자주 변경될 때
+// 단점 1. state를 가져와 쓸 때
+function Modal() { 
+  return (
+    <div className='modal'>
+      <h4>제목</h4>
+      <p>날짜</p>
+      <p>상세내용</p>
+    </div>   
+  )
+}
+
 export default App;
