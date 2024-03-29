@@ -7,7 +7,7 @@ function App() {
   let post = '대전 우동 맛집';
   // 자동으로 html이 재렌더링됨
   let [글제목, 글제목변경] = useState(['남성 코트 추천', '강남 우동 맛집', '파이썬 독학']);
-  let [좋아요, 좋아요변경] = useState(0);
+  let [좋아요, 좋아요변경] = useState([0,0,0]);
   let [modal, setModal] = useState(false);
 
   return (
@@ -29,7 +29,7 @@ function App() {
         글제목변경(copy);
       }}> ✨ </button>
 
-      <div className="list">
+      {/* <div className="list">
         <h4>{ 글제목[0] } <span onClick={ () => { 좋아요변경(좋아요 + 1) }}>💗</span> { 좋아요 } </h4>
         <p>2월 17일 발행</p>
       </div>
@@ -41,11 +41,37 @@ function App() {
         <h4 onClick={ () => { setModal(modal == true ? false : true) }}>{ 글제목[2] }</h4>
         <p>2월 17일 발행</p>
       </div>
+      {
+        modal == true ? <Modal/> : null
+      } */}
+
+      {/* 
+          a : array 안에 데이터
+          i : 반복문 돌 떄 0부터 1씩 증가하는 정수 
+          map은 비슷한 html 반복 생성할 때 사용
+      */}
       
+
+      {
+        글제목.map(function(a, i){
+          return (
+            <div className="list" key={i}>
+              <h4 onClick={ () => { setModal(modal == true ? false : true) }}>{ a }
+              </h4>
+              <span onClick={ () => {
+                  let like = [...좋아요]; 
+                  like[i] += 1 
+                  좋아요변경(like)
+                  }}>💗</span>{ 좋아요[i] }
+              <p>2월 17일 발행</p>
+            </div>  
+          )
+        })
+      }
+
       {
         modal == true ? <Modal/> : null
       }
-
     </div>
   );
 }
