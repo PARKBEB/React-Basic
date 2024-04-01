@@ -22,12 +22,13 @@ function App() {
         글제목변경(order);
       }}>가나다순정렬</button>
        
-
       <button onClick={() => {
         let copy = [...글제목];
-        copy[0] = '여자코드 추천';
+        copy[0] = '여자코트 추천';
         글제목변경(copy);
       }}> ✨ </button>
+
+      
 
       {/* <div className="list">
         <h4>{ 글제목[0] } <span onClick={ () => { 좋아요변경(좋아요 + 1) }}>💗</span> { 좋아요 } </h4>
@@ -56,21 +57,22 @@ function App() {
         글제목.map(function(a, i){
           return (
             <div className="list" key={i}>
-              <h4 onClick={ () => { setModal(modal == true ? false : true) }}>{ a }
+              <h4>
+                <span onClick={ () => { setModal(modal == true ? false : true) }}>{ a }</span>
+                <span onClick={ () => {
+                    let like = [...좋아요]; 
+                    like[i] += 1 
+                    좋아요변경(like)
+                    }}>💗</span>{ 좋아요[i] }
               </h4>
-              <span onClick={ () => {
-                  let like = [...좋아요]; 
-                  like[i] += 1 
-                  좋아요변경(like)
-                  }}>💗</span>{ 좋아요[i] }
               <p>2월 17일 발행</p>
             </div>  
           )
         })
       }
-
+    
       {
-        modal == true ? <Modal/> : null
+        modal == true ? <Modal color={'pink'} 글제목={글제목} 글제목변경={글제목변경}/> : null
       }
     </div>
   );
@@ -79,12 +81,17 @@ function App() {
 // div Component
 // 장점 1. 반복적인 html 축약할 때 2. 큰 페이지 3. 자주 변경될 때
 // 단점 1. state를 가져와 쓸 때
-function Modal() { 
+function Modal(props) { 
   return (
-    <div className="modal">
-      <h4>제목</h4>
+    <div className="modal" style={{background : props.color}}>
+      <h4>{props.글제목[0]}</h4>
       <p>날짜</p>
       <p>상세내용</p>
+      <button onClick={() => {
+        let write = [...props.글제목];
+        write[0] = '여자코트추천'
+        props.글제목변경(write)
+      }}>글수정</button>
     </div>   
   )
 }
