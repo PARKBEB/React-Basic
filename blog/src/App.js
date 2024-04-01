@@ -9,6 +9,8 @@ function App() {
   let [글제목, 글제목변경] = useState(['남성 코트 추천', '강남 우동 맛집', '파이썬 독학']);
   let [좋아요, 좋아요변경] = useState([0,0,0]);
   let [modal, setModal] = useState(false);
+  let [title, setTitle] = useState(0);
+  let [입력값, 입력값변경] = useState('');
 
   return (
     <div className="App">
@@ -28,42 +30,23 @@ function App() {
         글제목변경(copy);
       }}> ✨ </button>
 
-      
-
-      {/* <div className="list">
-        <h4>{ 글제목[0] } <span onClick={ () => { 좋아요변경(좋아요 + 1) }}>💗</span> { 좋아요 } </h4>
-        <p>2월 17일 발행</p>
-      </div>
-      <div className="list">
-        <h4>{ 글제목[1] }</h4>
-        <p>2월 17일 발행</p>
-      </div>
-      <div className="list">
-        <h4 onClick={ () => { setModal(modal == true ? false : true) }}>{ 글제목[2] }</h4>
-        <p>2월 17일 발행</p>
-      </div>
-      {
-        modal == true ? <Modal/> : null
-      } */}
-
-      {/* 
-          a : array 안에 데이터
-          i : 반복문 돌 떄 0부터 1씩 증가하는 정수 
-          map은 비슷한 html 반복 생성할 때 사용
-      */}
-      
-
       {
         글제목.map(function(a, i){
           return (
             <div className="list" key={i}>
-              <h4>
-                <span onClick={ () => { setModal(modal == true ? false : true) }}>{ a }</span>
-                <span onClick={ () => {
+              <h4 onClick={ () => { setModal(modal == true ? false : true); setTitle(i)}}>{ a }
+                <span onClick={ (e) => {
+                    e.stopPropagation();
                     let like = [...좋아요]; 
                     like[i] += 1 
                     좋아요변경(like)
                     }}>💗</span>{ 좋아요[i] }
+                    <button onClick={ (e) => {
+                      e.stopPropagation();
+                      let 글삭제 = [...글제목];
+                      글삭제.splice(i, 1);
+                      글제목변경(글삭제);
+                    }}>삭제</button>
               </h4>
               <p>2월 17일 발행</p>
             </div>  
@@ -71,8 +54,16 @@ function App() {
         })
       }
     
+      <input onChange={ (e) => { 입력값변경(e.target.value) }}/>
+      <button onClick={() => {
+        let textCopy = [...글제목];
+        textCopy.unshift(입력값);
+        글제목변경(textCopy);
+      }}>추가🌞</button>
+
+
       {
-        modal == true ? <Modal color={'pink'} 글제목={글제목} 글제목변경={글제목변경}/> : null
+        modal == true ? <Modal color={'pink'} 타이틀={title} 글제목={글제목} 글제목변경={글제목변경}/> : null
       }
     </div>
   );
@@ -84,7 +75,7 @@ function App() {
 function Modal(props) { 
   return (
     <div className="modal" style={{background : props.color}}>
-      <h4>{props.글제목[0]}</h4>
+      <h4>{props.글제목[props.타이틀]}</h4>
       <p>날짜</p>
       <p>상세내용</p>
       <button onClick={() => {
